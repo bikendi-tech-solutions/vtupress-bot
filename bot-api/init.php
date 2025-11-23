@@ -59,8 +59,15 @@ if ( !$vp_ok || !$vpr_ok ) {
 }
 
 
-
 include_once(WP_CONTENT_DIR . "/plugins/vtupress/functions.php");
+
+if(vp_getoption('vtupress_custom_bot') != 'yes'){
+    echo json_encode([
+        "valid"   => true,
+        "message" => "Please you need to purchase the bots custom order to make this addon work!"
+    ]);
+    exit;
+}
 
 // API key sent from JS is in HTTP_API_KEY
 if (!isset($_SERVER["HTTP_API_KEY"])) {
