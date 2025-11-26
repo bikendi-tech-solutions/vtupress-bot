@@ -21,7 +21,6 @@ $required_vpreseller = '2.5.4';
 
 // If plugin is not active at all
 if ( !is_plugin_active( $vp_plugin_slug ) || !is_plugin_active( $vpr_plugin_slug ) ) {
-    header("HTTP/1.1 403 Forbidden");
     echo json_encode([
         "valid"   => true,
         "message" => "Core plugin is not active"
@@ -43,7 +42,6 @@ $vpr_ok = version_compare($vpr_version, $required_vpreseller, '>=');
 
 // If version is lower than required
 if ( !$vp_ok || !$vpr_ok ) {
-    header("HTTP/1.1 403 Forbidden");
 
     $error = "Required plugin version mismatch\n";
     $error .= "Vtupress Version: *{$vp_version}*\n";
@@ -62,7 +60,6 @@ if ( !$vp_ok || !$vpr_ok ) {
 include_once(WP_CONTENT_DIR . "/plugins/vtupress/functions.php");
 
 if(vp_getoption('vtupress_custom_bot') != 'yes'){
-    header("HTTP/1.1 400 Bad Request");
     echo json_encode([
         "valid"   => true,
         "message" => "Please you need to purchase the bots custom order to make this addon work!"
@@ -72,7 +69,6 @@ if(vp_getoption('vtupress_custom_bot') != 'yes'){
 
 // API key sent from JS is in HTTP_API_KEY
 if (!isset($_SERVER["HTTP_API_KEY"])) {
-    header("HTTP/1.1 400 Bad Request");
     echo json_encode([
         "valid"   => true,
         "message" => "Missing API key"
@@ -80,7 +76,6 @@ if (!isset($_SERVER["HTTP_API_KEY"])) {
     exit;
 }
 elseif (!isset($_SERVER["HTTP_BOT_CHANNEL"])) {
-    header("HTTP/1.1 400 Bad Request");
     echo json_encode([
         "valid"   => true,
         "message" => "Bot Channel Not Stated"
@@ -92,7 +87,6 @@ $apiKey = $_SERVER["HTTP_API_KEY"];
 $channel = $_SERVER["HTTP_BOT_CHANNEL"];
 
 if($channel != "whatsapp" && $channel != "telegram"){
-    header("HTTP/1.1 400 Bad Request");
     echo json_encode([
         "valid"   => true,
         "message" => "Channel not valid"
@@ -105,7 +99,6 @@ global $bot_apiKey;
 //check admin apiKey
 $bot_apiKey = vp_getuser('1',"vr_id");
 if ($apiKey !== $bot_apiKey) {
-    header("HTTP/1.1 403 Forbidden");
     echo json_encode([
         "valid"   => true,
         "message" => "Invalid API key"

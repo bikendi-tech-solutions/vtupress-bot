@@ -6,7 +6,6 @@ include 'init.php';
 $requiredFields = ['number', 'username', 'firstName', 'lastName', 'email', 'pin', 'password'];
 foreach ($requiredFields as $field) {
     if (empty($array[$field])) {
-        header("HTTP/1.1 400 Bad Request");
         echo json_encode(["error" => "Missing required field: $field"]);
         exit;
     }
@@ -35,7 +34,6 @@ $response = post($registerEndpoint, [
 
 //if wp error get the message
 if (is_wp_error($response)) {
-    header("HTTP/1.1 500 Internal Server Error");
     echo json_encode(["message" => "Registration request failed: " . $response->get_error_message()]);
     exit;
 }
@@ -44,7 +42,6 @@ $data = json_decode($body, true);
 
 if(!isset($data["status"]) || $data["status"] != "100"){
     error_log("Registration failed: " . $body);
-    header("HTTP/1.1 400 Bad Request");
     $errorMessage = isset($data["message"]) ? $data["message"] : "Registration failed";
     echo json_encode(["success" => false, "message" => $errorMessage]);
     exit;

@@ -17,7 +17,6 @@ $apiresponse = post($registerEndpoint, [
 
 
 if (is_wp_error($apiresponse)) {
-    header("HTTP/1.1 500 Internal Server Error");
     echo json_encode(["message" => "Registration request failed: " . $apiresponse->get_error_message()]);
     exit;
 }

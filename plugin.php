@@ -3,7 +3,7 @@
 *Plugin Name: Vtupress Bot
 *Plugin URI: https://bikendi.com
 *Description: This Add-on adds the bot system
-*Version: 1.0.2
+*Version: 1.0.3
 *Author: Akor Victor
 *Author URI: https://facebook.com/bikendi-tech-solutions
 */

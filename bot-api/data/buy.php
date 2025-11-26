@@ -9,7 +9,6 @@ $requiredFields = ["network_id", "network_name", "data_type", "data_type_name", 
 
 foreach ($requiredFields as $field) {
     if (empty($array['data'][$field])) {
-        header("HTTP/1.1 400 Bad Request");
         $response["message"] = "Missing required field: $field";
         echo json_encode($response);
         exit;
@@ -49,7 +48,6 @@ $apiresponse = post($registerEndpoint, [
 
 
 if (is_wp_error($apiresponse)) {
-    header("HTTP/1.1 500 Internal Server Error");
     $response["message"] = "Request Failed: " . $apiresponse->get_error_message();
     echo json_encode($response);
     exit;

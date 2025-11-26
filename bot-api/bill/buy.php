@@ -50,7 +50,6 @@ $apiresponse = post($registerEndpoint, [
 
 
 if (is_wp_error($apiresponse)) {
-    header("HTTP/1.1 500 Internal Server Error");
     $response["message"] = "Registration request failed: " . $apiresponse->get_error_message();
     echo json_encode($response);
     exit;
@@ -60,7 +59,6 @@ $data = json_decode($body, true);
 
 if (!isset($data["Status"]) || !isset($data["Successful"]) || $data["Status"] != "100" || $data["Successful"] != "true") {
     error_log("bill Purchase failed: " . $body);
-    header("HTTP/1.1 400 Bad Request");
     $errorMessage = isset($data["message"]) ? $data["message"] : "Purchase failed $body";
     $response["success"] = false;
     $response["message"] = $errorMessage;
