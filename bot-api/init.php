@@ -62,6 +62,7 @@ if ( !$vp_ok || !$vpr_ok ) {
 include_once(WP_CONTENT_DIR . "/plugins/vtupress/functions.php");
 
 if(vp_getoption('vtupress_custom_bot') != 'yes'){
+    header("HTTP/1.1 400 Bad Request");
     echo json_encode([
         "valid"   => true,
         "message" => "Please you need to purchase the bots custom order to make this addon work!"
@@ -72,11 +73,32 @@ if(vp_getoption('vtupress_custom_bot') != 'yes'){
 // API key sent from JS is in HTTP_API_KEY
 if (!isset($_SERVER["HTTP_API_KEY"])) {
     header("HTTP/1.1 400 Bad Request");
-    echo json_encode(["error" => "Missing API key"]);
+    echo json_encode([
+        "valid"   => true,
+        "message" => "Missing API key"
+    ]);
+    exit;
+}
+elseif (!isset($_SERVER["HTTP_BOT_CHANNEL"])) {
+    header("HTTP/1.1 400 Bad Request");
+    echo json_encode([
+        "valid"   => true,
+        "message" => "Bot Channel Not Stated"
+    ]);
     exit;
 }
 
 $apiKey = $_SERVER["HTTP_API_KEY"];
+$channel = $_SERVER["HTTP_BOT_CHANNEL"];
+
+if($channel != "whatsapp" && $channel != "telegram"){
+    header("HTTP/1.1 400 Bad Request");
+    echo json_encode([
+        "valid"   => true,
+        "message" => "Channel not valid"
+    ]);
+    exit;
+}
 
 global $bot_apiKey;
 
@@ -84,7 +106,10 @@ global $bot_apiKey;
 $bot_apiKey = vp_getuser('1',"vr_id");
 if ($apiKey !== $bot_apiKey) {
     header("HTTP/1.1 403 Forbidden");
-    echo json_encode(["error" => "Invalid API key"]);
+    echo json_encode([
+        "valid"   => true,
+        "message" => "Invalid API key"
+    ]);
     exit;
 }
 
