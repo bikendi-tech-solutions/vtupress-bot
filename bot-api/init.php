@@ -134,14 +134,16 @@ global $wpdb;
 $user_meta_table = $wpdb->prefix . "usermeta";
 
 $pattern = '"vp_phone":"'. $owner_number .'"';
+$pattern2 = '"telegram_username":"'. $owner_number .'"';
 
 $user_id = $wpdb->get_var(
     $wpdb->prepare(
         "SELECT user_id FROM $user_meta_table 
          WHERE meta_key = %s 
-         AND meta_value REGEXP %s",
+         AND meta_value REGEXP %s OR meta_value REGEXP %s",
         'vp_user_data',
-        $pattern
+        $pattern,
+        $pattern2
     )
 );
 
