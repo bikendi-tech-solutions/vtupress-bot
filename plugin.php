@@ -18,9 +18,9 @@ require __DIR__.'/plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-	'https://github.com/bikendi-tech-solutions/vtupress_woocommerce/',
+	'https://github.com/bikendi-tech-solutions/vtupress-bot/',
 	__FILE__,
-	'vtupress_woocommerce'
+	'vtupress-bot'
 );
 //Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('main');
