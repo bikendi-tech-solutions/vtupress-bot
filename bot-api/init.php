@@ -1,5 +1,17 @@
 <?php
+// CORS FIX
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, api-key, bot-channel, X-Requested-With, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Credentials: true");
+
+// Handle Preflight (OPTIONS request)
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+
 
 error_reporting(0);
 
@@ -120,17 +132,27 @@ if (substr($owner_number, 0, 3) === '234') {
 //check if number exists in vtupress
 global $wpdb;
 $user_meta_table = $wpdb->prefix . "usermeta";
-$user_id = $wpdb->get_var($wpdb->prepare(
-    "SELECT user_id FROM $user_meta_table WHERE meta_key = %s AND meta_value LIKE %s",
-    'vp_user_data',
-    '%' . $owner_number . '%'
-));
+
+$pattern = '"vp_phone":"'. $owner_number .'"';
+
+$user_id = $wpdb->get_var(
+    $wpdb->prepare(
+        "SELECT user_id FROM $user_meta_table 
+         WHERE meta_key = %s 
+         AND meta_value REGEXP %s",
+        'vp_user_data',
+        $pattern
+    )
+);
 
 if ($user_id) {
     $response['valid'] = true;
 } else {
     $response['valid'] = false;
 }
+
+
+
 
 
 function post($registerEndpoint, $data)
