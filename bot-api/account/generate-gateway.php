@@ -3,7 +3,7 @@ include __DIR__ . '/../init.php';
 
 
 if(!isset($array["bank"])){
-        echo json_encode(["message" => "No bank/gateway specified"]);
+        echo json_encode(["valid"   => true,"message" => "No bank/gateway specified"]);
         exit;
 }
 
@@ -17,7 +17,7 @@ $apiresponse = post($registerEndpoint, [
 
 
 if (is_wp_error($apiresponse)) {
-    echo json_encode(["message" => "Registration request failed: " . $apiresponse->get_error_message()]);
+    echo json_encode(["valid"   => true,"message" => "Registration request failed: " . $apiresponse->get_error_message()]);
     exit;
 }
 $body = wp_remote_retrieve_body($apiresponse);

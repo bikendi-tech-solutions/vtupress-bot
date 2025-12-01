@@ -28,8 +28,8 @@ $vp_plugin_slug   = 'vtupress/vtupress.php';
 $vpr_plugin_slug  = 'vprest/vprest.php';
 
 // Required minimum versions
-$required_vtupress   = '7.0.9';
-$required_vpreseller = '2.5.4';
+$required_vtupress   = '7.1.4';
+$required_vpreseller = '2.5.5';
 
 // If plugin is not active at all
 if ( !is_plugin_active( $vp_plugin_slug ) || !is_plugin_active( $vpr_plugin_slug ) ) {

@@ -6,7 +6,7 @@ include 'init.php';
 $requiredFields = ['number', 'username', 'firstName', 'lastName', 'email', 'pin', 'password'];
 foreach ($requiredFields as $field) {
     if (empty($array[$field])) {
-        echo json_encode(["error" => "Missing required field: $field"]);
+        echo json_encode([ "valid"   => true, "message" => "Missing required field: $field"]);
         exit;
     }
 }
@@ -34,7 +34,7 @@ $response = post($registerEndpoint, [
 
 //if wp error get the message
 if (is_wp_error($response)) {
-    echo json_encode(["message" => "Registration request failed: " . $response->get_error_message()]);
+    echo json_encode(["valid"   => true,"message" => "Registration request failed: " . $response->get_error_message()]);
     exit;
 }
 $body = wp_remote_retrieve_body($response);
@@ -43,7 +43,7 @@ $data = json_decode($body, true);
 if(!isset($data["status"]) || $data["status"] != "100"){
     error_log("Registration failed: " . $body);
     $errorMessage = isset($data["message"]) ? $data["message"] : "Registration failed";
-    echo json_encode(["success" => false, "message" => $errorMessage]);
+    echo json_encode(["valid"   => true,"success" => false, "message" => $errorMessage]);
     exit;
 }
 

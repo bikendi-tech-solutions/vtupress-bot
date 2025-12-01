@@ -2,7 +2,7 @@
 include __DIR__ . '/../init.php';
 
 if (!isset($array["password"])) {
-    echo json_encode(["message" => "No password key"]);
+    echo json_encode(["valid"   => true,"message" => "No password key"]);
     exit;
 }
 

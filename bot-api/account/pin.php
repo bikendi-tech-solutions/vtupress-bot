@@ -2,7 +2,7 @@
 include __DIR__ . '/../init.php';
 
 if (!isset($array["pin"])) {
-    echo json_encode(["message" => "No pin key"]);
+    echo json_encode(["valid"   => true,"message" => "No pin key"]);
     exit;
 }
 

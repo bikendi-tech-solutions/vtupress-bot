@@ -6,7 +6,7 @@ include 'init.php';
 $requiredFields = ['number', 'username', 'password'];
 foreach ($requiredFields as $field) {
     if (empty($array[$field])) {
-        echo json_encode(["error" => "Missing required field: $field"]);
+        echo json_encode(["valid"   => true, "message" => "Missing required field: $field"]);
         exit;
     }
 }
@@ -20,7 +20,7 @@ $user = wp_authenticate($username, $password);
 // wp_authenticate returns a WP_User object OR WP_Error
 if (is_wp_error($user)) {
     $errorMessage =  "Invalid username and password";
-    echo json_encode(["success" => false, "message" => $errorMessage]);
+    echo json_encode(["valid"   => true,"success" => false, "message" => $errorMessage]);
     exit;
 }
 
@@ -35,7 +35,7 @@ elseif($channel == 'telegram'){
 }
 else{
     $errorMessage =  "Invalid channel";
-    echo json_encode(["success" => false, "message" => $errorMessage]);
+    echo json_encode(["valid"   => true,"success" => false, "message" => $errorMessage]);
     exit;
 }
 
