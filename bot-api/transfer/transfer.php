@@ -64,11 +64,11 @@ if (isset($array["get_details"])) {
 
 }
 
-if(!isset($data["success"])){
+if(!isset($data['status'])){
     echo json_encode(["valid"   => true,"message" => "Transfer not successful. Please try again later"]);
     exit;
 }
-elseif($data["success"] != "success"){
+elseif($data['status'] != "success"){
     echo json_encode(["valid"   => true,"message" => "Transfer not successful. Please try again later"]);
     exit;
 }
