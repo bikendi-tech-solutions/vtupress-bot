@@ -78,11 +78,11 @@ $response['data'] = [
     'success' => true,
     'message' => '',
     'bank_name' => strtoupper($request['bank_name']),
-    'amount' => floatval($request['amount']),
+    'amount' => number_format(floatval($request['amount'])),
     'account_name' => $request['account_name'],
     'account_number' => $request['account_number'],
-    'previous_balance' => $data['amount_before'],
-    'balance' => $data['amount_now']
+    'previous_balance' => number_format($data['amount_before']),
+    'balance' => number_format($data['amount_now'])
 ];
 
 echo json_encode($response);
